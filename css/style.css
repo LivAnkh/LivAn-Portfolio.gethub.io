@@ -233,10 +233,20 @@ section {
   margin-top: 1.25rem;
 }
 
-.text-animation span::before {
-  animation: words 20s infinite;
+.text-animation span {
   color: var(--accent-soft);
-  content: "Frontend Developer";
+  min-height: 1em;
+}
+
+.text-animation span::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 4px;
+  background: var(--accent-soft);
+  vertical-align: -0.12em;
+  animation: cursor-blink .8s steps(1, end) infinite;
 }
 
 .home p {
@@ -564,6 +574,63 @@ textarea {
   background: var(--accent);
   color: #fff;
   cursor: pointer;
+  transition: background .2s ease, opacity .2s ease, transform .2s ease;
+}
+
+.text .btn:disabled {
+  cursor: wait;
+  opacity: .7;
+  transform: none;
+}
+
+.contact-status {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  display: flex;
+  font-size: .95rem;
+  gap: .7rem;
+  line-height: 1.5;
+  margin: 0;
+  padding: .85rem 1rem;
+}
+
+.contact-status:empty {
+  display: none;
+}
+
+.contact-status.loading {
+  background: rgba(255, 77, 109, .08);
+  border-color: rgba(255, 77, 109, .25);
+  color: var(--ink);
+}
+
+.contact-status.loading::before {
+  animation: contact-spinner .75s linear infinite;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-right-color: transparent;
+  content: "";
+  flex: 0 0 1rem;
+  height: 1rem;
+}
+
+.contact-status.success {
+  background: rgba(45, 182, 125, .1);
+  border-color: rgba(45, 182, 125, .3);
+  color: #2db67d;
+}
+
+.contact-status.error {
+  background: rgba(255, 107, 129, .1);
+  border-color: rgba(255, 107, 129, .3);
+  color: #ff6b81;
+}
+
+@keyframes contact-spinner {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ===== Footer ===== */
@@ -690,31 +757,9 @@ textarea {
 }
 
 /* ===== Text animation ===== */
-@keyframes words {
-
-  0%,
-  20% {
-    content: "Frontend Developer";
-  }
-
-  21%,
-  40% {
-    content: "Web Designer";
-  }
-
-  41%,
-  60% {
-    content: "Website Creator";
-  }
-
-  61%,
-  80% {
-    content: "Web Developer";
-  }
-
-  81%,
-  100% {
-    content: "Software Tester";
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
   }
 }
 

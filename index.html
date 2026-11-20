@@ -127,10 +127,11 @@
   <section class="projects" id="projects">
     <div class="section-label">MY WORK</div>
     <h2 class="section-title">Featured <span>projects.</span></h2>
+    <p>I have worked on many projects; these are just a few.</p>
     <div class="project-grid">
-      <article class="project-card"><div class="project-number">01</div><h3>My CV</h3><p>Add a short description of your first project and the tools used.</p><a href="#">View project <i class="fa-solid fa-arrow-up-right-from-square"></i></a></article>
-      <article class="project-card"><div class="project-number">02</div><h3>Project Name</h3><p>Add a short description of your second project and the tools used.</p><a href="#">View project <i class="fa-solid fa-arrow-up-right-from-square"></i></a></article>
-      <article class="project-card"><div class="project-number">03</div><h3>Project Name</h3><p>Add a short description of your third project and the tools used.</p><a href="#">View project <i class="fa-solid fa-arrow-up-right-from-square"></i></a></article>
+      <article class="project-card"><div class="project-number">01</div><h3>My CV</h3><p>View or download my professional CV.</p><a href="./assets/Chreom-Liv-An-CV.pdf" target="_blank" rel="noopener noreferrer">View project <i class="fa-solid fa-arrow-up-right-from-square"></i></a></article>
+      <article class="project-card"><div class="project-number">02</div><h3>LivAn Store</h3><p>An online store website built for LivAn.</p><a href="https://livankh.github.io/LivAn-Store/" target="_blank" rel="noopener noreferrer">View project <i class="fa-solid fa-arrow-up-right-from-square"></i></a></article>
+      <article class="project-card"><div class="project-number">03</div><h3>Bong Sron AgriService</h3><p>An agricultural service website.</p><a href="https://livankh.github.io/bong-sron-agriservice/" target="_blank" rel="noopener noreferrer">View project <i class="fa-solid fa-arrow-up-right-from-square"></i></a></article>
     </div>
   </section>
 
@@ -138,15 +139,16 @@
 <section class="contact" id="contact">
      <h2 class="heading">Contact <span>Me</span></h2>
       <div class="form-container">
-         <form action="#" method="get">
+         <form id="contact-form" action="#" method="get">
               <div class="inputs">
-                 <input type="text" placeholder="Full Name" class="input">
-                 <input type="email" placeholder="Email" class="input">
-                 <input type="number" placeholder="Phone Number" class="input">
+                 <input type="text" name="name" placeholder="Full Name" class="input" required>
+                 <input type="email" name="email" placeholder="Email" class="input" required>
+                 <input type="tel" name="phone" placeholder="Phone Number" class="input">
               </div>
                <div class="text">
-                 <textarea placeholder="Your Message"></textarea>
+                 <textarea name="message" placeholder="Your Message" required></textarea>
                  <button type="submit" class="btn">Send Message</button>
+                 <p id="contact-status" role="status" aria-live="polite"></p>
                </div>
          </form>
       </div>

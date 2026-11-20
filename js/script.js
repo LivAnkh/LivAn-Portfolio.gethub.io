@@ -35,3 +35,83 @@ window.addEventListener("scroll", () => {
 scrollTopButton?.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
+
+const animatedText = document.querySelector(".text-animation span");
+const textList = [
+  "Frontend Developer",
+  "Web Designer",
+  "Website Creator",
+  "Web Developer",
+  "Software Tester"
+];
+
+if (animatedText && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  let textIndex = 0;
+  let characterIndex = textList[0].length;
+  animatedText.textContent = textList[0];
+
+  const wait = (milliseconds) =>
+    new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+
+  const runTextAnimation = async () => {
+    while (true) {
+      await wait(1400);
+
+      const currentText = textList[textIndex];
+      while (characterIndex > 0) {
+        characterIndex -= 1;
+        animatedText.textContent = currentText.slice(0, characterIndex);
+        await wait(55);
+      }
+
+      await wait(250);
+      textIndex = (textIndex + 1) % textList.length;
+
+      const nextText = textList[textIndex];
+      characterIndex = 0;
+      while (characterIndex < nextText.length) {
+        characterIndex += 1;
+        animatedText.textContent = nextText.slice(0, characterIndex);
+        await wait(70);
+      }
+    }
+  };
+
+  runTextAnimation();
+} else if (animatedText) {
+  animatedText.textContent = textList[0];
+}
+
+const contactForm = document.querySelector("#contact-form");
+const contactStatus = document.querySelector("#contact-status");
+const contactSubmitButton = contactForm?.querySelector('button[type="submit"]');
+
+contactForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  contactStatus.textContent = "Sending your message...";
+  contactStatus.className = "contact-status loading";
+  contactSubmitButton.disabled = true;
+  contactSubmitButton.textContent = "Sending...";
+
+  fetch("./send-contact.php", {
+    method: "POST",
+    body: new FormData(contactForm)
+  })
+    .then(async (response) => {
+      const data = await response.json();
+      if (!response.ok || !data.ok) {
+        throw new Error(data.message || "Unable to send message.");
+      }
+      contactStatus.textContent = data.message;
+      contactStatus.className = "contact-status success";
+      contactForm.reset();
+    })
+    .catch((error) => {
+      contactStatus.textContent = error.message || "Unable to send message.";
+      contactStatus.className = "contact-status error";
+    })
+    .finally(() => {
+      contactSubmitButton.disabled = false;
+      contactSubmitButton.textContent = "Send Message";
+    });
+});
