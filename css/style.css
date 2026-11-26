@@ -81,6 +81,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: "DM Sans", sans-serif;
+  padding-top: 74px;
 }
 
 a {
@@ -89,6 +90,14 @@ a {
 }
 
 /* ===== Navigation ===== */
+header {
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+
 .header {
   align-items: center;
   backdrop-filter: blur(16px);
@@ -98,9 +107,8 @@ a {
   height: 74px;
   justify-content: space-between;
   padding: 0 clamp(1.25rem, 6vw, 7rem);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  position: relative;
+  width: 100%;
 }
 
 .header .logo a {
@@ -125,11 +133,40 @@ a {
 .header .menu a {
   color: var(--muted);
   font-weight: 600;
+  padding: .35rem 0;
+  position: relative;
   transition: color .2s ease;
 }
 
-.header .menu a:hover {
+.header .menu a::after {
+  background: var(--accent);
+  bottom: -.35rem;
+  content: "";
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform .25s ease;
+  width: 100%;
+}
+
+.header .menu a:hover,
+.header .menu a:focus-visible,
+.header .menu a.active {
   color: var(--ink);
+}
+
+.header .menu a:hover::after,
+.header .menu a:focus-visible::after,
+.header .menu a.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.header .menu a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: 2px;
 }
 
 .theme-toggle {
@@ -188,16 +225,38 @@ a {
   color: var(--muted);
   display: block;
   padding: .7rem .8rem;
+  position: relative;
 }
 
-.dropdown-item:hover {
+.dropdown-item::after {
+  background: var(--accent);
+  bottom: .35rem;
+  content: "";
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%) scaleX(0);
+  transition: transform .25s ease;
+  width: calc(100% - 1.6rem);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus-visible,
+.dropdown-item.active {
   background: rgba(255, 255, 255, .06);
   color: var(--ink);
+}
+
+.dropdown-item:hover::after,
+.dropdown-item:focus-visible::after,
+.dropdown-item.active::after {
+  transform: translateX(-50%) scaleX(1);
 }
 
 /* ===== Shared section layout ===== */
 section {
   padding: clamp(3rem, 5vw, 4.5rem) clamp(1.25rem, 7vw, 8rem);
+  scroll-margin-top: 74px;
 }
 
 /* ===== Home / hero section ===== */
@@ -836,6 +895,14 @@ textarea {
 }
 
 @media (max-width: 600px) {
+  body {
+    padding-top: 64px;
+  }
+
+  section {
+    scroll-margin-top: 64px;
+  }
+
   .header {
     height: 64px;
   }

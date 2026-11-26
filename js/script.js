@@ -36,6 +36,43 @@ scrollTopButton?.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
+const navigationLinks = document.querySelectorAll(".header .menu a, .dropdown-menu a");
+const pageSections = ["Home", "about", "education", "services", "contact"]
+  .map((id) => document.getElementById(id))
+  .filter(Boolean);
+
+const updateActiveNavigation = () => {
+  const marker = window.scrollY + (window.innerHeight * 0.35);
+  let activeId = pageSections[0]?.id;
+
+  pageSections.forEach((section) => {
+    if (section.offsetTop <= marker) {
+      activeId = section.id;
+    }
+  });
+
+  navigationLinks.forEach((link) => {
+    const isActive = link.hash === `#${activeId}`;
+    link.classList.toggle("active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+};
+
+window.addEventListener("scroll", updateActiveNavigation, { passive: true });
+window.addEventListener("resize", updateActiveNavigation);
+updateActiveNavigation();
+
+navigationLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    dropdown?.classList.remove("show");
+    menuButton?.setAttribute("aria-expanded", "false");
+  });
+});
+
 const animatedText = document.querySelector(".text-animation span");
 const textList = [
   "Frontend Developer",
