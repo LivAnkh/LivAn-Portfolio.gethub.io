@@ -520,6 +520,54 @@ section {
   margin-left: .3rem;
 }
 
+/* ===== Skills ===== */
+.skills {
+  background: var(--bg);
+  text-align: center;
+}
+
+.skills-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  margin: auto;
+  max-width: 1200px;
+  text-align: left;
+}
+
+.skill-card {
+  align-items: center;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem 1.35rem;
+  transition: border-color .2s ease, transform .2s ease;
+}
+
+.skill-card:hover {
+  border-color: rgba(255, 77, 109, .55);
+  transform: translateY(-4px);
+}
+
+.skill-card>i {
+  color: var(--accent-soft);
+  font-size: 1.75rem;
+  width: 32px;
+}
+
+.skill-card h3 {
+  font: 600 1.05rem "Outfit", sans-serif;
+  margin: 0 0 .25rem;
+}
+
+.skill-card p {
+  color: var(--muted);
+  font-size: .85rem;
+  margin: 0;
+}
+
 /* ===== Education ===== */
 .education {
   background: var(--surface);
@@ -884,7 +932,8 @@ textarea {
 
   .education .container,
   .service-grid,
-  .project-grid {
+  .project-grid,
+  .skills-grid {
     grid-template-columns: 1fr;
     max-width: 600px;
   }
