@@ -1,8 +1,17 @@
 const menuButton = document.querySelector(".bar-menu button");
+const menuIcon = menuButton?.querySelector("i");
 const dropdown = document.querySelector(".dropdown-menu");
 const themeToggle = document.querySelector(".theme-toggle");
 const themeIcon = themeToggle?.querySelector("i");
 const scrollTopButton = document.querySelector(".scroll-top");
+
+const setMenuOpen = (isOpen) => {
+  menuButton?.setAttribute("aria-expanded", String(isOpen));
+  menuButton?.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+  menuIcon?.classList.toggle("fa-xmark", isOpen);
+  menuIcon?.classList.toggle("fa-bars", !isOpen);
+  dropdown?.classList.toggle("show", isOpen);
+};
 
 const setTheme = (isLight) => {
   document.body.classList.toggle("light-theme", isLight);
@@ -17,14 +26,12 @@ themeToggle?.addEventListener("click", () => setTheme(!document.body.classList.c
 
 menuButton?.addEventListener("click", () => {
   const expanded = menuButton.getAttribute("aria-expanded") === "true";
-  menuButton.setAttribute("aria-expanded", String(!expanded));
-  dropdown.classList.toggle("show", !expanded);
+  setMenuOpen(!expanded);
 });
 
 document.addEventListener("click", (event) => {
   if (!event.target.closest(".bar-menu")) {
-    dropdown?.classList.remove("show");
-    menuButton?.setAttribute("aria-expanded", "false");
+    setMenuOpen(false);
   }
 });
 
@@ -37,7 +44,7 @@ scrollTopButton?.addEventListener("click", () => {
 });
 
 const navigationLinks = document.querySelectorAll(".header .menu a, .dropdown-menu a");
-const pageSections = ["Home", "about", "education", "services", "contact"]
+const pageSections = ["Home", "about", "education", "services", "projects", "contact"]
   .map((id) => document.getElementById(id))
   .filter(Boolean);
 
@@ -68,8 +75,7 @@ updateActiveNavigation();
 
 navigationLinks.forEach((link) => {
   link.addEventListener("click", () => {
-    dropdown?.classList.remove("show");
-    menuButton?.setAttribute("aria-expanded", "false");
+    setMenuOpen(false);
   });
 });
 
